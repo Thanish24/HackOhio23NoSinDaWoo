@@ -29,11 +29,22 @@
             <script>
                 function playMusic() {
                     var music = new Audio('website\key05.mp3');
-                    //rape
                     document.getElementById("demo").innerHTML = 5 + 6;
                     music.play();
                 }
             </script>
+            <script>
+                document.addEventListener("keydown", event => {
+                  if (event.isComposing || event.keyCode !== 32) {
+                    return;
+                  }
+                  myFunction();
+                //   <audio autoplay src="{{ notePath }}"/>
+                });
+                function myFunction() {
+                  alert("hey");
+                }
+                </script>
         </div>
     </body>
 

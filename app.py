@@ -56,11 +56,16 @@ def generate_frames():
             for (x, y, w, h) in fists:
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
                 fistCoords = [x + w/2, y + h/2] # location of the fist
+<<<<<<< Updated upstream
             
             cv2.putText(frame, str(fistCoords), (30,30))
 
             drawGrid(shape, frame)
 
+=======
+            if len(fistCoords) > 1:
+                cv2.putText(frame, "x: %s, y: %s" % (fistCoords[0], fistCoords[1]), (30,30), cv2.FONT_HERSHEY_COMPLEX, 1, (0,0,0))
+>>>>>>> Stashed changes
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
         
