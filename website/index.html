@@ -42,12 +42,25 @@
                 //   <audio autoplay src="{{ notePath }}"/>
                 });
                 function playNote() {
-                    playTone("{{data}}", "sine", 2)  
+                    playTone(clock.innerHTML, "sine", 2)  
                 } 
                 
             </script>
 
-            <div id="data">'{{ url_for('stream') }}'</div>
+            <p id="clock">note</p>
+
+<script>
+    var clock = document.getElementById("clock");
+    var note = "C4"
+
+    setInterval(() => {
+        fetch("{{ url_for('stream') }}")
+        .then(response => {
+                response.text().then(t => {clock.innerHTML = t})
+                note = t
+            });
+        }, 1000);  
+</script>
     </script>
 
 
