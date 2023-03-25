@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    </head>
+    <body>
+        <div class="App">
+            <header class="App-header">
+                <h1>{{title}}</h1>
+            </header>
+            <div>
+                <img src="{{ url_for('video') }}" width="50%"/>
+            </div>
+            <header>
+                <h2>
+                    Start Playing:
+                </h2>
+            </header>
+            <header>
+                <h2>
+                    Select an Instrument:
+                </h2>
+            </header>
+            <audio controls autoplay src="website\key05.mp3">
+            <input type="button" value="sound" onclick="playMusic()" />
+            <p id="demo"></p>
+            <script>
+                function playMusic() {
+                    var music = new Audio('website\key05.mp3');
+                    //rape
+                    document.getElementById("demo").innerHTML = 5 + 6;
+                    music.play();
+                }
+            </script>
+        </div>
+    </body>
+
+</html>
