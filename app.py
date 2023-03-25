@@ -4,9 +4,10 @@ import cv2
 app = Flask(__name__, template_folder="website")
 camera = cv2.VideoCapture(0)
 Cascade = cv2.CascadeClassifier('fist.xml')
-
+fistCoords = []
 
 def generate_frames():
+    global fistCoords
     while True:
         success, frame = camera.read() #read camera frame: return bool and frame
         if not success:
@@ -19,6 +20,9 @@ def generate_frames():
 
             for (x, y, w, h) in fists:
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+                fistCoords = [x + w/2, y + h/2] # location of the fist
+            
+            cv2.putText(frame, "x: %s, y: %s" % (fistCoords[0], fistCoords[1]))
 
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
