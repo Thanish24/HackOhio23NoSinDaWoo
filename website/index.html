@@ -4,6 +4,7 @@
         <title>{{ title }}</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
     </head>
     <body>
         <div class="App">
@@ -21,31 +22,26 @@
             <header>
                 <h2>
                     Select an Instrument:
+                    <button onclick="playTone('E4')">Click me!</button>
                 </h2>
             </header>
-            <audio controls autoplay src="website\key05.mp3">
-            <input type="button" value="sound" onclick="playMusic()" />
-            <p id="demo"></p>
             <script>
-                function playMusic() {
-                    var music = new Audio('website\key05.mp3');
-                    document.getElementById("demo").innerHTML = 5 + 6;
-                    music.play();
-                }
-            </script>
-            <script>
+                let isPlaying = false;
+                var t0 = performance.now();
+                doSomething();
+                var t1 = performance.now();
                 document.addEventListener("keydown", event => {
                   if (event.isComposing || event.keyCode !== 32) {
+                    isPlaying = false;
                     return;
                   }
-                  myFunction();
+                  playNote();
                 //   <audio autoplay src="{{ notePath }}"/>
                 });
-                function myFunction() {
-                  alert("hey");
-                }
-                </script>
+                function playNote() {
+                    playTone("C4", "sine", 2)  
+                } 
+            </script>
         </div>
     </body>
-
 </html>
