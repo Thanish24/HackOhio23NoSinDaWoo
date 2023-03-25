@@ -9,8 +9,8 @@ shape = []
 
 # draws a grid on the camera to guide the user
 def drawGrid(shape, frame):
-    x = shape[0]
-    y = shape[1]
+    y = shape[0]
+    x = shape[1]
 
     # 7x4
 
@@ -22,15 +22,15 @@ def drawGrid(shape, frame):
 
     for i in range(0,7):
         yIntervals.append(yCounter)
-        yCounter = yCounter + y//7
+        yCounter = yCounter + y//4
 
         xIntervals.append(xCounter)
-        xCounter = xCounter + x//4
+        xCounter = xCounter + x//7
     
-    for i in yIntervals:
+    for i in xIntervals:
         cv2.line(frame, (i, 0), (i, y), (255,0,0), 2)
 
-    for e in xIntervals:
+    for e in yIntervals:
         cv2.line(frame, (0, e), (x, e), (255,0,0), 2)
 
 
