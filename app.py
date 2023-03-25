@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, jsonify, request, send_file
+from flask import Flask, render_template, Response, jsonify, request, send_file, stream_with_context, stream_template
 import cv2
 
 app = Flask(__name__, template_folder="website")
@@ -6,9 +6,14 @@ camera = cv2.VideoCapture(0)
 Cascade = cv2.CascadeClassifier('fist.xml')
 fistCoords = []
 shape = []
+xIntervals = []                                                                                         
+yIntervals = []
 
 # draws a grid on the camera to guide the user
 def drawGrid(shape, frame):
+    global xIntervals
+    global yIntervals
+
     y = shape[0]
     x = shape[1]
 
@@ -32,6 +37,38 @@ def drawGrid(shape, frame):
 
     for e in yIntervals:
         cv2.line(frame, (0, e), (x, e), (255,0,0), 2)
+
+
+def getN():
+    global xIntervals
+    global yIntervals
+    oct = "4"
+    note = "C"
+
+    if len(fistCoords) > 1:
+
+        value = fistCoords[0]
+        value2 = fistCoords[1]
+
+        if (value > xIntervals[0] and value <= xIntervals[1]): oct = "3"
+        if (value > xIntervals[1] and value <= xIntervals[2]): oct = "4"
+        if (value > xIntervals[2] and value <= xIntervals[3]): oct = "5"
+        if (value > xIntervals[3]): oct = "6"
+
+        if (value2 > yIntervals[0] and value2 <= yIntervals[1]): note = "A"
+        if (value2 > yIntervals[1] and value2 <= yIntervals[2]): note = "B"
+        if (value2 > yIntervals[2] and value2 <= yIntervals[3]): note = "C"
+        if (value2 > yIntervals[3] and value2 <= yIntervals[4]): note = "D"
+        if (value2 > yIntervals[4] and value2 <= yIntervals[5]): note = "E"
+        if (value2 > yIntervals[5] and value2 <= yIntervals[6]): note = "F"
+        if (value2 > yIntervals[6]): note = "G"
+
+    val = note + oct
+
+    yield(val)
+
+    return note + oct
+
 
 
 
@@ -63,9 +100,15 @@ def generate_frames():
         
         yield(b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/stream')
+def stream():
+    return Response(getN(), mimetype="text")
+
 
 @app.route('/video')
 def video():

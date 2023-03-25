@@ -9,7 +9,7 @@
     <body>
         <div class="App">
             <header class="App-header">
-                <h1>{{title}}</h1>
+                <h1>Inclusive Rhythms</h1>
             </header>
             <div>
                 <img src="{{ url_for('video') }}" width="80%"/>
@@ -21,11 +21,14 @@
             </header>
             <header>
                 <h2>
-                    Select an Instrument:
-                    <button onclick="playTone('E4')">Click me!</button>
+                    <button onclick="playTone('{{data}}')">Start</button>
+                    <button onclick="alert(note)">Flask Test</button>
+                    <button onclick="alert(y)">y</button>
+                    <button onclick="alert(x)">x</button>
                 </h2>
             </header>
             <script>
+                
                 let isPlaying = false;
                 var t0 = performance.now();
                 doSomething();
@@ -39,9 +42,15 @@
                 //   <audio autoplay src="{{ notePath }}"/>
                 });
                 function playNote() {
-                    playTone("C4", "sine", 2)  
+                    playTone("{{data}}", "sine", 2)  
                 } 
+                
             </script>
+
+            <div id="data">'{{ url_for('stream') }}'</div>
+    </script>
+
+
         </div>
     </body>
 </html>
