@@ -22,14 +22,11 @@ def drawGrid(shape, frame):
 
     for i in range(0,7):
         yIntervals.append(yCounter)
-        yCounter = yCounter + y/7
+        yCounter = yCounter + y//7
 
         xIntervals.append(xCounter)
-        xCounter = xCounter + x/4
+        xCounter = xCounter + x//4
     
-    cv2.line(frame, (yIntervals[0],0), (yIntervals[0], y))
-    cv2.line(frame, (yIntervals[1],0), (yIntervals[1], y))
-
     for i in yIntervals:
         cv2.line(frame, (i, 0), (i, y), (255,0,0), 2)
 
@@ -47,7 +44,7 @@ def generate_frames():
             break
         else:
 
-            shape = frame.shape()
+            shape = frame.shape
 
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -56,16 +53,11 @@ def generate_frames():
             for (x, y, w, h) in fists:
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
                 fistCoords = [x + w/2, y + h/2] # location of the fist
-<<<<<<< Updated upstream
             
-            cv2.putText(frame, str(fistCoords), (30,30))
-
             drawGrid(shape, frame)
 
-=======
             if len(fistCoords) > 1:
                 cv2.putText(frame, "x: %s, y: %s" % (fistCoords[0], fistCoords[1]), (30,30), cv2.FONT_HERSHEY_COMPLEX, 1, (0,0,0))
->>>>>>> Stashed changes
             ret, buffer = cv2.imencode('.jpg', frame)
             frame = buffer.tobytes()
         
